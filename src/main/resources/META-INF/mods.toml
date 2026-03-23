@@ -1,0 +1,35 @@
+modLoader="javafml"
+loaderVersion="[43,44)"
+license="MIT"
+
+# Optional: You can update this later if you put it on GitHub or CurseForge
+#issueTrackerURL="https://github.com/yourname/click/issues"
+
+clientSideOnly=false
+
+[[mods]]
+modId="click"
+version="0.6.6.6.22"
+displayName="Click"
+authors="jacobfromnm"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/click-inspired-by-the-film-hereditary"
+logoFile="icon.png"
+credits="Special thanks to Nyx."
+
+description='''
+The demon king Paimon calls to you...
+'''
+
+[[dependencies.click]]
+modId="forge"
+mandatory=true
+versionRange="[43,44)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.click]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.19.2]"
+ordering="NONE"
+side="BOTH"

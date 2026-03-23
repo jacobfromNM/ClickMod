@@ -1,0 +1,16 @@
+{
+    "click_001": {
+        "category": "ambient",
+        "sounds": [
+            {
+                "name": "click:click_001",
+                "stream": false
+            }
+        ]
+    },
+    "ambiance": {
+        "sounds": [
+            "click:ambiance"
+        ]
+    }
+}
