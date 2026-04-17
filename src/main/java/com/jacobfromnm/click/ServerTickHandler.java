@@ -99,9 +99,6 @@ public class ServerTickHandler {
                         }
                     }
                 }
-            } else {
-                if (ClickConfig.ENABLE_LOGGING.get())
-                    System.out.println("[Click Mod] Did not roll for spawn, no entity spawned.");
             }
         }
     }
@@ -178,7 +175,10 @@ public class ServerTickHandler {
         int skyLight = level.getBrightness(LightLayer.SKY, pos);
         boolean isUnderground = skyLight <= 2; // occluded from sun (e.g., caves, indoors)
 
-        if (ClickConfig.ENABLE_LOGGING.get())
+        boolean inValidState = isNightTime || isUnderground;
+
+        // Only log when the player is in a state where the primary roll can trigger
+        if (inValidState && ClickConfig.ENABLE_LOGGING.get())
             System.out.println("[Click Mod] Time: " + dayTime +
                     " | Night: " + isNightTime +
                     " | Sky Light: " + skyLight +
@@ -186,6 +186,11 @@ public class ServerTickHandler {
 
         // If it's night OR you're underground OR the 0.01% chance triggers, go for it.
         double chance = ClickConfig.SPAWN_CHANCE.get();
-        return (((isNightTime || isUnderground) && random.nextFloat() < chance) || (random.nextFloat() < 0.001));
+        boolean result = ((inValidState && random.nextFloat() < chance) || (random.nextFloat() < 0.001));
+
+        if (!result && inValidState && ClickConfig.ENABLE_LOGGING.get())
+            System.out.println("[Click Mod] Did not roll for spawn, no entity spawned.");
+
+        return result;
     }
 }

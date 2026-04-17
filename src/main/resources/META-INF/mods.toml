@@ -9,7 +9,7 @@ clientSideOnly=false
 
 [[mods]]
 modId="click"
-version="0.6.6.6.22"
+version="${mod_version}"
 displayName="Click"
 authors="jacobfromnm"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/click-inspired-by-the-film-hereditary"
