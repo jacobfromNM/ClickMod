@@ -33,3 +33,10 @@ mandatory=true
 versionRange="[1.19.2]"
 ordering="NONE"
 side="BOTH"
+
+[[dependencies.click]]
+modId="cloth_config"
+mandatory=false
+versionRange="[8,9)"
+ordering="NONE"
+side="CLIENT"

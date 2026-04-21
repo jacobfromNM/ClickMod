@@ -15,8 +15,11 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.client.ConfigScreenHandler;
 
 /**
  * Main mod class.
@@ -34,6 +37,9 @@ public class ClickMod {
 
                 // Register config...
                 ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClickConfig.CONFIG);
+
+                // Capture ModConfig reference for ClothConfig save support
+                modEventBus.addListener(this::onConfigLoad);
 
                 // Register client-side renderer...
                 modEventBus.addListener(this::onClientSetup);
@@ -77,6 +83,18 @@ public class ClickMod {
         private void onClientSetup(FMLClientSetupEvent event) {
                 EntityRenderers.register(ClickMod.CREEPING_ENTITY.get(), CreepingEntityRenderer::new);
 
+                if (ModList.get().isLoaded("cloth_config")) {
+                        ModLoadingContext.get().registerExtensionPoint(
+                                ConfigScreenHandler.ConfigScreenFactory.class,
+                                () -> new ConfigScreenHandler.ConfigScreenFactory((mc, parent) -> ClickConfigScreen.create(parent))
+                        );
+                }
+        }
+
+        private void onConfigLoad(ModConfigEvent.Loading event) {
+                if (event.getConfig().getSpec() == ClickConfig.CONFIG) {
+                        ClickConfig.onLoad(event.getConfig());
+                }
         }
 
         // Entity attribute creation event handler for custom entities
